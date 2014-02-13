@@ -1,0 +1,36 @@
+<div class="ui teal huge button launch" >
+    <i class="icon large coffee"></i>
+</div>
+
+<div class="ui teal vertical sidebar menu">
+    <div class="item">
+        我的应用
+        <div class="menu">
+            <a href="" class="item">
+                <i class="tasks icon"></i>
+                My Todo
+            </a>
+            <a href="" class="item">
+                <i class="apple icon"></i>
+                番茄计时
+            </a>
+        </div>
+    </div>
+    <div class="item">
+        休闲一刻
+        <div class="menu">
+            
+        </div>
+    </div>
+    
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        var $launch = $('.launch.button');
+        // $launch.popup();
+        $launch.on('click', function() {
+            $('.ui.sidebar').sidebar('toggle');
+        });
+    });
+</script>
