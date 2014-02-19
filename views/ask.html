@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微糖</title>
+    <meta name="description" content="">
+
+    <link rel="stylesheet" href="/semantic/packaged/css/semantic.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/ask.css">
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/icon/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/icon/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/icon/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/icon/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="/icon/favicon.ico">
+
+    <script src="/lib/jquery.js"></script>
+    <script src="/semantic/packaged/javascript/semantic.js"></script>
+</head>
+<body>
+
+    <% include ./inc_topmenu.html %>
+
+    <div class="ui page grid mainpage">
+        <div class="eleven wide column">
+
+            <h4 class="ui dividing header">
+                <i class="inbox icon"></i>提出新问题
+            </h4>
+            
+            <div class="ui form">
+                <div class="field">
+                    <input type="text" class="title" placeholder="标题，用一句话说清你的问题">
+                </div>
+                <!-- <div class="field" style="margin-bottom: 5px;">
+                    <div class="ui icon buttons">
+                        <div class="ui button" title="撤销"><i class="reply mail icon"></i></div>
+                        <div class="ui button" title="重做"><i class="forward mail icon"></i></div>
+                    </div>
+                    <div class="ui icon buttons">
+                        <div class="ui button"><i class="bold icon"></i></div>
+                        <div class="ui button"><i class="italic icon"></i></div>
+                    </div>  
+                    <div class="ui icon buttons">
+                        <div class="ui button"><i class="url icon"></i></div>
+                        <div class="ui button"><i class="quote left icon"></i></div>
+                        <div class="ui button"><i class="code icon"></i></div>
+                        <div class="ui button"><i class="photo icon"></i></div>
+                    </div>
+                    <div class="ui icon buttons">
+                        <div class="ui button"><i class="ordered list icon"></i></div>
+                        <div class="ui button"><i class="unordered list icon"></i></div>
+                        <div class="ui button"><i class="fullscreen icon"></i></div>
+                    </div>
+                    <div class="ui icon buttons" style="float: right;">
+                        <div class="ui icon button">
+                            <i class="question icon"></i>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="field">
+                    <textarea class="content" style="height:288px;"></textarea>
+                </div>
+                
+            </div>
+        </div>
+        <div class="five wide column">
+            <!-- <h5 class="ui small header">
+                提问指南
+            </h5>
+            <div class="ui bulleted list">
+                <div class="item">良好的排版，正确使用Markdown语法</div>
+                <div class="item">内容与技术相关，有明确的答案，有代码贴代码，附上已尝试过的解决方案</div>
+            </div> -->
+
+            <div class="ui divider" style="margin-top: 27px;"></div>
+            <h5 class="ui header">问题标签（至少1个）</h5>
+
+            <div class="ui small labels hasAddedList">
+                
+            </div>
+
+            <div class="ui small fluid icon input">
+                <input type="text" placeholder="如: NodeJS" id="newTopic">
+                <i class="inverted blue add icon"></i>
+            </div>
+
+            <div class="ui segment">
+                <div class="ui small labels hotTopics">
+                    <div class="ui label">JavaScript</div>
+                    <div class="ui label">css</div>
+                    <div class="ui label">前端开发</div>
+                    <div class="ui label">css</div>
+                    <div class="ui label">JavaScript</div>
+                    <div class="ui label">JavaScript</div>
+                    <div class="ui label">css</div>
+                    <div class="ui label">前端开发</div>
+                    <div class="ui label">JavaScript</div>
+                    <div class="ui label">JavaScript</div>
+                    <div class="ui label">css</div>
+                    <div class="ui label">前端开发</div>
+                    <div class="ui label">JavaScript</div>
+                    <div class="ui label">css</div>
+                </div>
+            </div>
+
+            <div class="ui fluid green button add">
+                提交问题
+            </div>
+            
+        </div>
+
+    </div>
+    
+    <% include ./inc_gotop.html %>
+    <% include ./inc_footer.html %>
+
+    <script src="/seajs/sea.js" data-config="/js/config" data-main="/js/ask" ></script>
+
+</body>
+</html>

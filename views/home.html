@@ -59,9 +59,9 @@
 
     <script type="text/template" id="questionTemp">
         <h3 class="ui teal header">
-            <img class="ui avatar left floated image" src="/img/photo2.jpg">
+            <img class="ui avatar left floated image" src="/img/face.png" data-authorId="<?= authorId ?>">
             <div class="content">
-                <a href="/question?_id=<?= _id ?>" target="_blank" class="header"><?= title ?></a>
+                <a href="/question/<?= _id ?>" target="_blank" class="header"><?= title ?></a>
                 <div class="sub header">
                     <? for(var i = 0; i < topics.length; i++) { ?>
                         <a class="ui label"><?= topics[i] ?></a>
@@ -69,13 +69,13 @@
                 </div>
             </div>
         </h3>
-        <p><?= content ?><a href="/question?_id=<?= _id ?>" target="_blank" class="seeall">查看全部</a></p>
+        <p><?= content ?><a href="/question/<?= _id ?>" target="_blank" class="seeall">查看全部</a></p>
         <div class="ui text menu">
             <div class="item">
-                <i class="comment icon"></i><?= answerCounter ?>个回答
+                <i class="comment icon"></i><?= answerCount ?>个回答
             </div>
             <div class="item">
-                <i class="unhide icon"></i><?= viewCounter ?>次查看
+                <i class="unhide icon"></i><?= viewCount ?>次查看
             </div>
             <a href="javascript:void(0);" class="item heart">
                 <i class="heart red icon"></i>关注

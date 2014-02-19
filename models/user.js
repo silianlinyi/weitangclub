@@ -44,6 +44,10 @@ var UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    updateTime: {
+        type: Number,
+        default: 0,
+    },
     url: String,
     active: {
         type: Boolean,
@@ -64,6 +68,14 @@ var UserSchema = new Schema({
     resetToken: {
         type: String,
         default: ''
+    },
+    followers: {
+        type: Number,
+        default: 0
+    },
+    following: {
+        type: Number,
+        default: 0
     }
 });
 

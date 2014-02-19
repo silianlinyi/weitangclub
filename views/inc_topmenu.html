@@ -24,9 +24,9 @@
                 <span id="username">我的微糖</span>
                 <i class="dropdown icon"></i>
                 <div class="menu ui transition hidden">
-                    <div class="item">
+                    <a href="" class="item" id="myHomepage">
                         <i class="user icon"></i>我的主页
-                    </div>
+                    </a>
                     <!-- <div class="item">
                         <i class="mail icon"></i>私信
                     </div> -->
@@ -43,6 +43,24 @@
         </div>
     </div>
 </div>
+
+<i class="circular inverted large red bell outline icon"></i>
+
+<div class="ui small modal transition" style="width: 470px;margin-left: -235px;">
+    <i class="close icon"></i>
+    <div class="content">
+        <div class="ui header">
+            您的邮箱账号还未通过验证，马上去激活？
+            
+            <div class="sub header"></div>
+        </div>
+    </div>
+    <div class="actions">
+        <a href="/activeAccount" target="_blank" class="ui green button"> 重新发送邮件</a>
+        <a class="ui red button hasActive" href="javascript:void(0);">已经激活</a>
+    </div>
+</div>
+
 <script type="text/javascript">
     // 顶部导航栏相关代码写在这里
     // -------------------------------------------
@@ -77,5 +95,40 @@
                 width: '220'
             }, 300);
         });
+
+        $('.bell.icon').click(function() {
+            $('.small.modal').modal('show');
+        });
+
+        $('.hasActive').click(function() {
+            window.location.reload();
+        });
+        
+        function getUserInfo() {
+            $.ajax({
+                url: '/api/getUserInfo',
+                type: 'GET',
+                timeout: 15000,
+                success: function(data, textStatus, jqXHR) {
+                    console.log(data);
+                    var user;
+                    if(data.r === 0) {
+                        user = data.user;
+                        // 用户未激活显示提示
+                        if(!user.active) {
+                            $('.bell.icon').show();
+                        }
+
+                        $('#myHomepage').attr('href', '/user/' + user.username);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+        }
+
+        getUserInfo();
+
     });
 </script>

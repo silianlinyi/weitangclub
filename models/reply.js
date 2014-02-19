@@ -1,24 +1,25 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
 
 /**
- * belongTo 属于哪个问题的回复
  * content 回复详细内容
- * author 回复作者
+ * authorId 回复作者
+ * belongTo 属于哪个问题/回复的回复
  * createTime 回复创建时间
  * updateTime 回复最后更新时间
  */
 var ReplySchema = new Schema({
-    belongTo: String,
     content: String,
-    author: String,
+    authorId: ObjectId,
+    belongTo: ObjectId,
     createTime: {
-        type: Date,
-        default: Date.now
+        type: Number,
+        default: 0
     },
     updateTime: {
-        type: Date,
-        default: Date.now
+        type: Number,
+        default: 0
     }
 });
 

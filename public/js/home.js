@@ -1,13 +1,5 @@
 define(function(require, exports, module) {
 
-    require('../lib/jquery.cookie.js');
-
-    // 导航栏显示用户名
-    var weitang = $.cookie('weitang');
-    weitang = JSON.parse(weitang);
-    var username = weitang.username;
-    $('#username').html(username);
-
     // 加载依赖模块
     var log = require('../lib/log');
     var Util = require('../angel/util');
@@ -31,7 +23,7 @@ define(function(require, exports, module) {
      * content			问题详细内容
      * author 			问题作者_id
      * topics			问题所属话题
-     * answerCounter	问题回答个数
+     * answerCount		问题回答个数
      * viewCounter		问题被查看次数
      * createTime		问题创建时间
      * updateTime		问题最后更新时间
@@ -41,12 +33,12 @@ define(function(require, exports, module) {
         defaults: {
             title: '',
             content: '',
-            author: '',
+            authorId: '',
             topics: '',
-            answerCounter: 0,
-            viewCounter: 0,
-            createTime: '',
-            updateTime: ''
+            answerCount: 0,
+            viewCount: 0,
+            createTime: 0,
+            updateTime: 0
         }
     });
 
@@ -66,9 +58,10 @@ define(function(require, exports, module) {
      */
     var QuestionView = Backbone.View.extend({
         tagName: "div",
-        className: "ui basic segment",
+        className: "ui basic segment item",
         template: $("#questionTemp").html(),
         events: {
+            "mouseover .avatar": "getUserInfo",
             "click .heart": "heart",
             "click .bookmark": "bookmark",
             "click .share": "share"
@@ -76,12 +69,44 @@ define(function(require, exports, module) {
 
         initialize: function() {
             var me = this;
+
         },
 
         render: function() {
             var tmpl = _.template(this.template);
             this.$el.html(tmpl(this.model.toJSON()));
+
+            // var $avatar = this.$el.find('.avatar');
+            // $avatar.popup();
             return this;
+        },
+
+        getUserInfo: function() {
+            var $avatar = this.$el.find('.avatar');
+            var authorId = this.model.get('authorId');
+
+            $.ajax({
+                url: '/api/user/' + authorId,
+                type: 'GET',
+                success: function(data, textStatus, jqXHR) {
+                    console.log(data);
+                    var user;
+                    if (data.r === 0) {
+                        user = data.user;
+                        //$avatar.attr('data-content', user.username);
+                        $avatar.popup({
+                            position: 'bottom center',
+                            content: user.username,
+                            variation: 'inverted'
+                        }).popup('show');
+                    } else {
+
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                }
+            });
         },
 
         heart: function() {
@@ -90,7 +115,27 @@ define(function(require, exports, module) {
         },
 
         bookmark: function() {
-            // TODO
+            var questionId = this.model.get('_id');
+
+            $.ajax({
+                url: '/api/collections',
+                type: 'POST',
+                data: {
+                    questionId: questionId
+                },
+                success: function(data, textStatus, jqXHR) {
+                    console.log(data);
+                    if (data.r === 0) {
+                        alert(data.msg);
+                    } else {
+                        alert(data.msg);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                }
+            });
+
         },
 
         share: function() {
@@ -115,10 +160,10 @@ define(function(require, exports, module) {
             me.questionList = new QuestionList();
 
             me.queryConfig = {
-                pageStart: 0,
-                pageSize: 10,
+                pageSize: 5,
                 createTime: ""
             };
+
             me.findQuestions(); // 页面初始化时加载10条系统消息
             me.questionList.on("add", me.renderOneQuestion, me);
         },
@@ -147,8 +192,8 @@ define(function(require, exports, module) {
                 log("findQuestionsByPage failCall invoked.");
             }
             $.ajax({
-                url: '/api/question/findQuestionsByPage',
-                type: 'POST',
+                url: '/api/questions',
+                type: 'GET',
                 data: me.queryConfig,
                 success: function(data, textStatus, jqXHR) {
                     if (data.r === 0) {

@@ -49,7 +49,7 @@ define(function(require, exports, module) {
             timeout: 15000,
             success: function(data, textStatus, jqXHR) {
                 if (data.r === 0) {
-                    window.location.href = '/';
+                    window.location.reload();
                 } else {
                     $warning.html('<i class="icon attention"></i>' + data.msg).show();
                     return;

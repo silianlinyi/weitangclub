@@ -2,6 +2,14 @@ define(function(require, exports, module) {
 
     var Util = require('../angel/util');
 
+    var href = window.location.href;
+    if (!href.split('?')[1]) { // 说明是没有token的
+        $('.field2').show();
+        $('#captchaImg').attr('src', '/api/captcha');
+    } else {
+        $('.field1').show();
+    }
+
     $('div.field1 a').click(function() {
         $('.field1').hide();
         $('.field2').show();

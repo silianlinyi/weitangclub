@@ -1,5 +1,5 @@
 body {
-    font-family: "微软雅黑", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    font-family: "微软雅黑","宋体", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     margin: 0px;
     padding: 0px;
     color: #555555;
@@ -27,3 +27,11 @@ p {
     text-align: center;
     margin-bottom: 1.5rem;
 }
+.bell.icon {
+    top: 50px;
+    position: fixed;
+    left: 10px;
+    cursor: pointer;
+    display: none;
+}
+

@@ -27,12 +27,12 @@ var QuestionSchema = new Schema({
         default: 0
     },
     createTime: {
-        type: Date,
-        default: Date.now
+        type: Number,
+        default: 0
     },
     updateTime: {
-        type: Date,
-        default: Date.now
+        type: Number,
+        default: 0
     }
 });
 

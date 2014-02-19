@@ -1,5 +1,6 @@
 .ui.basic.segment {
 	padding: 0;
+	margin-top: 0px;
 }
 .basic.segment .header .content {
 	font-size: 16px;

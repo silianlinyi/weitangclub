@@ -4,17 +4,19 @@ define(function(require, exports, module) {
 
     /**
      * @method convertDate
-     * 将ISO标准时间格式转换成用户更乐意接受的形式
-     * 例如："2013-12-02T10:54:43.253Z" -> "1小时前"
+     * 将毫秒数转换成用户更乐意接受的形式
      */
     Util.convertDate = function(date) {
         var ONE_MINUTE_MILLISECONDS = 1 * 60 * 1000,
             ONE_HOUR_MILLISECONDS = ONE_MINUTE_MILLISECONDS * 60,
             ONE_DAY_MILLISECONDS = ONE_HOUR_MILLISECONDS * 24;
 
-        var dateMilliseconds = Date.parse(date),
-            currentMilliseconds = (new Date()).getTime(),
-            difference = currentMilliseconds - dateMilliseconds;
+        var currentMilliseconds = (new Date()).getTime(),
+            difference = currentMilliseconds - date;
+
+        if (difference < ONE_MINUTE_MILLISECONDS) {
+            return Math.floor(difference / 1000) + "秒前"
+        }
 
         for (var i = 1; i < 60; i++) {
             if (difference < ONE_MINUTE_MILLISECONDS * i) {

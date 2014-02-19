@@ -6,7 +6,8 @@ var mail = require('../services/mail');
 var Util = require('../common/util');
 var uuid = require('node-uuid');
 
-module.exports = {
+
+var UserModule = {
 
     /**
      * @method userAuth
@@ -25,6 +26,49 @@ module.exports = {
     },
 
     /**
+     * @method userActive
+     * 判断用户是否激活
+     */
+    userActive: function(req, res, next) {
+        var _id = req.session._id;
+
+        User.findOne({
+            _id: new ObjectId(_id)
+        }, function(err, doc) {
+            if (err) {
+                res.json({
+                    "r": 1,
+                    "errcode": 10007,
+                    "msg": "服务器错误，判断用户是否激活失败"
+                });
+                return;
+            }
+
+            if (doc.active) { //账号已经激活
+                console.log("[ >>> LOG >>> ]：账号已经激活");
+                next();
+            } else if (!doc.active) { // 账号未激活
+                console.log("[ >>> LOG >>> ]：账号未激活");
+                res.json({
+                    "r": 1,
+                    "errcode": 10008,
+                    "msg": "账号未激活"
+                });
+                return;
+            } else {
+                console.log("[ >>> LOG >>> ]：未知错误");
+                res.json({
+                    "r": 1,
+                    "errcode": 10009,
+                    "msg": "未知错误"
+                });
+                return;
+            }
+        });
+    },
+
+    /**
+     * @method register
      * 注册
      */
     register: function(req, res) {
@@ -161,6 +205,7 @@ module.exports = {
     },
 
     /**
+     * @method login
      * 登录
      */
     login: function(req, res) {
@@ -225,12 +270,18 @@ module.exports = {
         });
     },
 
+    /**
+     * @method logout
+     * 注销账号
+     */
     logout: function(req, res) {
         delete req.session._id;
+        res.clearCookie('weitang');
         res.redirect('/');
     },
 
     /**
+     * @method sendActiveMail
      * 重新发送激活账号邮件
      */
     sendActiveMail: function(req, res) {
@@ -437,6 +488,50 @@ module.exports = {
         });
     },
 
+    // 获取当前登录用户信息
+    getUserInfo: function(req, res) {
+        var _id = req.session._id || '';
+        if (_id.length !== 24) {
+            res.json({
+                "r": 1,
+                "errcode": 10000,
+                "msg": "参数错误"
+            });
+            return;
+        }
+        // {password: 0}表示不返回password这个属性
+        User.findOne({
+            _id: new ObjectId(_id)
+        }, {
+            password: 0
+        }, function(err, doc) {
+            if (err) {
+                res.json({
+                    "r": 1,
+                    "errcode": 10001,
+                    "msg": "服务器错误，调用findUserById方法出错"
+                });
+                return;
+            }
+
+            if ( !! doc) {
+                res.json({
+                    "r": 0,
+                    "msg": "请求成功",
+                    "user": doc
+                });
+                return;
+            } else {
+                res.json({
+                    "r": 1,
+                    "errcode": 10002,
+                    "msg": "用户不存在"
+                });
+                return;
+            }
+        });
+    },
+
     /**
      * 根据_id获取用户信息
      */
@@ -559,8 +654,44 @@ module.exports = {
                 return;
             }
         });
+    },
+
+    // 用户主页
+    index: function(req, res) {
+        var username = req.param('username');
+
+        // {password: 0}表示不返回password这个属性
+        User.findOne({
+            username: username
+        }, {
+            password: 0
+        }, function(err, doc) {
+            if (err) {
+                res.render('myHomepage', {
+                    "r": 1,
+                    "errcode": 10001,
+                    "msg": "服务器错误，调用findUserByName方法出错"
+                });
+            }
+
+            if ( !! doc) {
+                res.render('myHomepage', {
+                    "r": 0,
+                    "msg": "请求成功",
+                    "user": doc
+                });
+            } else {
+                res.render('myHomepage', {
+                    "r": 1,
+                    "errcode": 10002,
+                    "msg": "用户不存在"
+                });
+            }
+        });
     }
 
 
 
-}
+};
+
+module.exports = UserModule;

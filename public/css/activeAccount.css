@@ -34,12 +34,10 @@
 .page_container a.header i {
     margin-right: 0;
 }
-div.field2 {
+div.field {
     display: none;
 }
-div.field3 {
-    display: none;
-}
+
 .codefield .ui.input {
     width: 100px !important;
 }

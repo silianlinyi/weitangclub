@@ -1,0 +1,8 @@
+.labels .label {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+i.add {
+	cursor: pointer !important;
+}

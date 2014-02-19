@@ -1,0 +1,19 @@
+.ui.buttons .button {
+	margin-right: 10px;
+}
+.comment .metadata {
+	float: right;
+}
+.comment .author {
+	font-weight: bold;
+}
+.reply.form textarea {
+	min-height: 5em;
+	height: 5em;
+}
+
+.createTimeField {
+}
+.comment .text {
+	margin: 0.25em 3.25em 0.5em 0em !important;
+}
